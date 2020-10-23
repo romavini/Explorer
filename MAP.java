@@ -3,9 +3,9 @@ import java.util.Random;
 
 public class MAP {
 
-	private static String Direcao;
 	private static String ERRO;
-
+	private static int food1 = 0;
+	private static int hunger = 10, hungerF = 0;
 	public static void main (String[] args){
 		Random generator = new Random();
 
@@ -15,22 +15,20 @@ public class MAP {
 		String[][] monster = new String [17][17];
 		int i;
 		int j;
-		int u;
-		int v;
+
 		int T = 0;
 		float life = 100f;
-		int hunger = 10;
-		int FomeF = 0;
-		int FomeV = 0;
-		int Comida = 0;
+
+		int hungerV = 0;
 
 
-		boolean Inicio = false;
+
+		boolean begin = false;
 
 		try{
 
 			generator.nextInt(10);
-			int Random;
+			int random;
 
 			//=======Monstro_Cachorro_Dormindo=======//
 
@@ -44,8 +42,8 @@ public class MAP {
 					map[i][j] = "Gramado, floresta escura";
 				}
 			}
-			u=3;
-			v=1;
+			int u = 3;
+			int v = 1;
 			map[u][v] = "Gramado, porem bem iluminado";
 
 			u = 4;
@@ -54,40 +52,34 @@ public class MAP {
 			GameScreenCli.printExplorerString("				EXPLORER v.0");
 			System.out.println();
 			System.out.println("		Bem vindo ao EXPLORER v.0, ");
-			String L_MAPA = ("Seu local e: "+v+" ; "+u+" .");
-			String MAO_E = ("Mao esquerda vazia.");
-			String MAO_D = ("Mao direita vazia.");
+			String L_MAPA = ("Seu local e: "+ v +" ; "+ u +" .");
+			String leftHand = ("Mao esquerda vazia.");
+			String rightHand = ("Mao direita vazia.");
 
-			System.out.println(" 	Para te manter vivo      -->		Vida: "+life);
-			System.out.println(" 	Para te manter atento    -->		Fome: "+hunger);
-			System.out.println("	Para nao ficar com fome  -->	 	  "+Comida+" x macas");
-			System.out.println();
-			System.out.println(" 	Para te localizar     --> 			"+L_MAPA);
-			System.out.println("		<--	Quando houver comida, aparecera aqui");
-			System.out.println("	Para controlar o que carrega-->			"+MAO_E);
-			System.out.println("		<--	Aqui aparecem os mostros. Cuidado...");
-			System.out.println("	Para controlar o que carrega-->			"+MAO_D);
-			System.out.println();
-			System.out.println("E simple, para ir ao sul, escreva: sul ; ");
-			System.out.println("Para pegar macas, escreva: pegar maca ; ");
-			System.out.println("Para atacar com o que estiver em sua mao direita, escreva: atacar direita ; ");
-			System.out.println("Para comer (caso voce tenha comida), escreva: comer ; ");
-			System.out.println("Para se livrar de algo (balde, por exemplo) , escreva: jogar balde;");
-			System.out.println();
-			System.out.println("Esta pronto? Precione enter!");
+			gameStatusNow(life, hunger, food1, L_MAPA, leftHand, rightHand,
+					" 	Para te manter vivo      -->		Vida: ",
+					" 	Para te manter atento    -->		Fome: ",
+					"	Para nao ficar com fome  -->	 	  ", "" +
+							" 	Para te localizar     --> 			",
+					"		<--	Quando houver comida, aparecera aqui",
+					"	Para controlar o que carrega-->			",
+					"		<--	Aqui aparecem os mostros. Cuidado...");
+
+			GameScreenCli.printRules();
 
 
-			String Direcao;
+			String direction;
 			int infinity = 0; 								//Gerador de comida
-			int tamanho;
+			int size;
 
-			tamanho = 29;
+			size = 29;
 			int[][] GCA = new int [16][16];
+
 			String[][] food = new String [17][17];
 
 
 
-			while (infinity < tamanho){
+			while (infinity < size){
 				u = generator.nextInt(15);
 				v = generator.nextInt(15);
 				if (GCA[u][v] != 1){
@@ -99,61 +91,25 @@ public class MAP {
 
 			String Maca = "	maca no chao!";
 
-			for(i = 0 ;i < 17 ;i++){
-				for(j = 0 ;j < 17 ;j++){
-					food[i][j]=" ";
-				}
-			}
+			foodGenerator(GCA, food, Maca);
 
-			for(i = 0 ;i < 15 ;i++){
-				for(j = 0 ;j < 15 ;j++){
-					if (GCA[i][j]==1){
-						food[i+1][j+1] = Maca;
-					}
+			int[][] GMA = monsterGenerator(generator, monster);
 
-				}
-			}
-
-			infinity = 0; 								//Gerador de monstros
-			float Vida_Monstro= 37f;
-
-			tamanho = 23;
-
-			int[][] GMA = new int [16][16];
-
-
-			infinityLessThanSize(generator, infinity, tamanho, GMA);
-
-			String MonstroCachorroDormindo = "	cachorro grande dormindo ao pe de uma arvore";
-
-			for(i = 0 ;i < 17 ;i++){
-				for(j = 0 ;j < 17 ;j++){
-					monster[i][j]=" ";
-				}
-			}
-
-			for(i = 0 ;i < 15 ;i++){
-				for(j = 0 ;j < 15 ;j++){
-					if (GMA[i][j]==1){
-						monster[i+1][j+1] = MonstroCachorroDormindo;
-						System.out.println("-----------------ADD CACHORRO ; "+(i+1)+" ; "+(j+1));
-					}
-				}
-			}
+			float monsterHealth;
 
 			u = 4;
 			v = 4;
 
-			String ERRO =" ";
+			String error =" ";
 
 			while (T==0){ 																			//INICIO~~~~~~
-				Vida_Monstro = 37f;
+				monsterHealth = 37f;
 
-				L_MAPA = ("Seu local e: "+v+" ; "+u+" .");
+				L_MAPA = ("Seu local e: "+ v +" ; "+ u +" .");
 
-				if (FomeF == 4){
+				if (hungerF == 4){
 					hunger--;
-					FomeF = 0;
+					hungerF = 0;
 				}
 
 				if (hunger <= 4){
@@ -161,9 +117,9 @@ public class MAP {
 				}
 
 				if (hunger > 7){
-					FomeV++;
-					if(FomeV == 2){
-						FomeV = 0;
+					hungerV++;
+					if(hungerV == 2){
+						hungerV = 0;
 						life = life + 3;
 						if (life > 100){
 							life = 100;
@@ -178,51 +134,41 @@ public class MAP {
 
 					GameScreenCli.printExplorerString("			EXPLORER v.0");
 
-					if (u==0){
-						System.out.println("Aqui1");
-						ERRO = "Voce nao pode avancar nesse sentido.";
-						u=u+1;
+					if (u ==0){
+
+						error = "Voce nao pode avancar nesse sentido.";
+						u = u +1;
 					} else{
-						if (v==0){
-							System.out.println("Aqui2");
-							ERRO = "Voce nao pode avancar nesse sentido.";
-							v=v+1;
-						} else{
-							if (v==16){
-								System.out.println("Aqui4");
-								ERRO = "Voce nao pode avancar nesse sentido.";
-								v=v-1;
+						if (v ==0){
+
+							error = "Voce nao pode avancar nesse sentido.";
+							v = v +1;
+						}else{
+							if (v ==16){
+
+								error = "Voce nao pode avancar nesse sentido.";
+								v = v -1;
 							}
 						}
 					}
-					System.out.println("Aqui5");
-					System.out.println(ERRO);
-					ERRO = " ";
-					L_MAPA = ("Seu local e: "+u+" ; "+v+" .");
 
-					System.out.println("								Vida: "+life);
-					System.out.println("								Fome: "+hunger);
-					System.out.println("								   "+Comida+" x macas");
-					System.out.println();
-					System.out.println("							"+L_MAPA);
-					System.out.println(food[u][v]);
-					System.out.println("							"+MAO_E);
-					System.out.println(monster[u][v]);
-					System.out.println("							"+MAO_D);
-					System.out.println();
+					System.out.println(error);
+					error = " ";
+					L_MAPA = ("Seu local e: "+ u +" ; "+ v +" .");
+
+					gameStatusNow(life, hunger, food1, L_MAPA, leftHand, rightHand, "								Vida: ", "								Fome: ", "								   ", "							", food[u][v], "							", monster[u][v]);
 
 
-
-					if (!Inicio){
+					if (!begin){
 						System.out.println();
 						System.out.println(map[u][v]+", voce acaba de acorda... ");
 						System.out.println();
 						System.out.println();
 						System.out.println();
-						System.out.println("sul: "+map[u+1][v]);
-						System.out.println("leste: "+map[u][v+1]);
-						System.out.println("norte: "+map[u-1][v]);
-						System.out.println("oeste: "+map[u][v-1]);
+						System.out.println("sul: "+map[u +1][v]);
+						System.out.println("leste: "+map[u][v +1]);
+						System.out.println("norte: "+map[u -1][v]);
+						System.out.println("oeste: "+map[u][v -1]);
 						System.out.println();
 					} else{
 						System.out.println();
@@ -230,10 +176,10 @@ public class MAP {
 						System.out.println();
 						System.out.println();
 						System.out.println();
-						System.out.println("sul: "+map[u+1][v]);
-						System.out.println("leste: "+map[u][v+1]);
-						System.out.println("norte: "+map[u-1][v]);
-						System.out.println("oeste: "+map[u][v-1]);
+						System.out.println("sul: "+map[u +1][v]);
+						System.out.println("leste: "+map[u][v +1]);
+						System.out.println("norte: "+map[u -1][v]);
+						System.out.println("oeste: "+map[u][v -1]);
 						System.out.println();
 					}
 
@@ -242,79 +188,66 @@ public class MAP {
 
 					System.out.println("Escolha uma direcao");
 
-					Direcao = input.readLine();
+					direction = input.readLine();
 
-					if (Direcao.equals("sul")){
+					if (direction.equals("sul")){
 						u = u + 1;
-						FomeF++;
+						hungerF++;
 					} else {
-						if (Direcao.equals("leste")){
+						if (direction.equals("leste")){
 							v = v + 1;
-							FomeF++;
+							hungerF++;
 						} else{
-							if (Direcao.equals("norte")){
-								System.out.println("Aqui6");
+							if (direction.equals("norte")){
+
 								u = u - 1;
-								System.out.println("Aqui7");
-								FomeF++;
+
+								hungerF++;
 								System.out.println(u);
 							} else{
-								if (Direcao.equals("oeste")){
+								if (direction.equals("oeste")){
 									v = v - 1;
-									FomeF++;
+									hungerF++;
 								}
 							}
 						}
 					}
-					if (Direcao.equals("pegar maca")){
-						if(GCA[u-1][v-1]==1){
-							Comida++;
-							GCA[u-1][v-1]= 0;
-							food[u][v]=" ";
-						} else{
-							ERRO = "Nao ha macas no chao!";
-						}
+					if (direction.equals("pegar maca")){
+						error = getMaca(u, v, GCA, food, error);
 					}
-					if (Direcao.equals("comer")){
-						if(Comida>0){
-							Comida--;
-							FomeF = 0;
-							hunger = hunger + 3;
-							if (hunger >10){
-								hunger = 10;
-							}
-						}
+					if (direction.equals("comer")){
+						eat();
 					}
 
 
-					if (Direcao.equals("atacar")){
-						if(GMA[u-1][v-1]==1){
-							Random =  generator.nextInt(10);
-							Vida_Monstro = Vida_Monstro - Random;
-							Combate(life, Comida, hunger, Vida_Monstro, L_MAPA, MAO_D, MAO_E, u, v);
-							if (Vida_Monstro > 0){
-								GMA[u-1][v-1]=0;
+					if (direction.equals("atacar")){
+						if(GMA[u -1][v -1]==1){
+							random =  generator.nextInt(10);
+							monsterHealth = monsterHealth - random;
+							Combate(life, food1, hunger, monsterHealth, L_MAPA, rightHand, leftHand, u, v);
+							if (monsterHealth > 0){
+								GMA[u -1][v -1]=0;
 								monster[u][v]=" ";
 							}
-							System.out.println(Vida_Monstro);
+							System.out.println(monsterHealth);
 						} else{
-							ERRO = "Nao ha nada a ser atacado!";
+							error = "Nao ha nada a ser atacado!";
 						}
 					}
 
 					if (GMA[u][v]==1){
-						Random =  generator.nextInt(8);
-						System.out.println(Random);
-						if (Random == 0){
-							Combate(life, Comida, hunger, Vida_Monstro, L_MAPA, MAO_D, MAO_E, u, v);
+						random =  generator.nextInt(8);
+						System.out.println(random);
+						if (random == 0){
+							Combate(life, food1, hunger, monsterHealth, L_MAPA, rightHand, leftHand, u, v);
 							//if (Cont == 1){
 							//	GMA[u-1][v-1]=0;
 							//	MONSTRO[u][v]=" ";
 							//}
-							System.out.println(Vida_Monstro);
+							System.out.println(monsterHealth);
 						}
 					}
-					Inicio = true;
+					begin = true;
 				}
 
 			}
@@ -322,6 +255,79 @@ public class MAP {
 		}catch(Exception e){
 			System.out.println("erro");
 		}
+	}
+
+	private static String getMaca(int u, int v, int[][] GCA, String[][] food, String error) {
+		if(GCA[u -1][v -1]==1){
+			food1++;
+			GCA[u -1][v -1]= 0;
+			food[u][v]=" ";
+		} else{
+			error = "Nao ha macas no chao!";
+		}
+		return error;
+	}
+
+	private static void eat() {
+		if(food1>0){
+			food1--;
+			hungerF = 0;
+			hunger = hunger + 3;
+			if (hunger >10){
+				hunger = 10;
+			}
+		}
+	}
+
+	private static void foodGenerator(int[][] GCA, String[][] food, String maca) {
+		int i;
+		int j;
+		for(i = 0 ; i < 17 ; i++){
+			for(j = 0 ;j < 17 ;j++){
+				food[i][j]=" ";
+			}
+		}
+
+		for(i = 0 ;i < 15 ;i++){
+			for(j = 0 ;j < 15 ;j++){
+				if (GCA[i][j]==1){
+					food[i+1][j+1] = maca;
+				}
+
+			}
+		}
+	}
+
+
+	private static int[][] monsterGenerator(Random generator, String[][] monster) {
+		int size;
+		int infinity;
+		infinity = 0; 							//Gerador de monstros
+		
+		size = 23;
+
+		int[][] GMA = new int [16][16];
+
+
+		infinityLessThanSize(generator, infinity, size, GMA);
+
+		String SleepingMonsterDog = "	cachorro grande dormindo ao pe de uma arvore";
+
+		foodGenerator(GMA, monster, SleepingMonsterDog);
+		return GMA;
+	}
+
+	private static void gameStatusNow(float life, int hunger, int food1, String l_MAPA, String leftHand, String rightHand, String s, String s2, String s3, String s4, String s5, String s6, String s7) {
+		System.out.println(s + life);
+		System.out.println(s2 + hunger);
+		System.out.println(s3 + food1 + " x macas");
+		System.out.println();
+		System.out.println(s4 + l_MAPA);
+		System.out.println(s5);
+		System.out.println(s6 + leftHand);
+		System.out.println(s7);
+		System.out.println(s6 + rightHand);
+		System.out.println();
 	}
 
 	private static void highWallWalk(String[][] MAPA, int i2, int i3, String s, int i4) {
@@ -345,22 +351,21 @@ public class MAP {
 			} else {
 				GMA[u][v] = 1;
 				infinity++;
-				System.out.println("ADD CACHORRO ; "+u+" ; "+v);
+				//System.out.println("ADD CACHORRO ; "+u+" ; "+v);
 			}
 		}
 	}
 
 	public static void Combate (float Vida, int Comida, int Fome, float Vida_Monstro, String L_MAPA, String MAO_D, String MAO_E, int u, int v){
-		Random gerador = new Random();
-		BufferedReader entrada;
-		entrada = new BufferedReader(new InputStreamReader(System.in));
-		int Vantagem_MONS = 0;
+		Random generator = new Random();
+		BufferedReader input;
+		input = new BufferedReader(new InputStreamReader(System.in));
+		int Vantagem_MONS;
 		int Vantagem= 0 ;
 		int C = 0;
-		int Rolagem = 0;
-		int Cont = 0;
-		String Acao1 = " ";
-		String Acao2 = " ";
+		int roll;		
+		String action1 = " ";
+		String action2 = " ";
 		try{
 			System.out.println();
 			System.out.println();
@@ -370,16 +375,17 @@ public class MAP {
 			while(C == 0){
 				Vantagem_MONS = 0;
 				if (Vida_Monstro > 0){
+
 					System.out.println();
 					System.out.println();
 					System.out.println();
 					System.out.println("				COMBATE COM CACHORRO!!");
 					System.out.println();
-					System.out.println(Acao1);
+					System.out.println(action1);
 					System.out.println();
-					System.out.println(Acao2);
-					Acao1 = " ";
-					Acao2 = " ";
+					System.out.println(action2);
+					action1 = " ";
+					action2 = " ";
 					System.out.println();
 					System.out.println("Cachorro: "+Vida_Monstro+"							Sua Vida: "+Vida);
 					System.out.println("								Fome: "+Fome);
@@ -393,74 +399,75 @@ public class MAP {
 					GameScreenCli.printExplorerString("O que vai fazer?");
 					System.out.println();
 					System.out.println();
-					Direcao = entrada.readLine();
-					if (Direcao.equals("atacar")){
-						Rolagem =  gerador.nextInt(20);
-						if (Rolagem == 0){
+
+					String direcao = input.readLine();
+					if (direcao.equals("atacar")){
+						roll =  generator.nextInt(20);
+						if (roll == 0){
 							Vantagem_MONS = Vantagem_MONS + 4;
-							Acao1 = "Voce escorrega e cai no chao!";
+							action1 = "Voce escorrega e cai no chao!";
 						} else {
-							Rolagem = Rolagem + Vantagem;
-							if (Rolagem > 15){
-								Rolagem =  gerador.nextInt(7);
-								Rolagem = Rolagem + Vantagem;
-								Vida_Monstro = Vida_Monstro - Rolagem;
-								Acao1 = "Voce acerta um chute no cachorro!	--	Dano:"+Rolagem;
+							roll = roll + Vantagem;
+							if (roll > 15){
+								roll =  generator.nextInt(7);
+								roll = roll + Vantagem;
+								Vida_Monstro = Vida_Monstro - roll;
+								action1 = "Voce acerta um chute no cachorro!	--	Dano:"+roll;
 							} else{
-								if (Rolagem > 7){
-									Rolagem =  gerador.nextInt(5);
-									Rolagem = Rolagem + Vantagem;
-									Vida_Monstro = Vida_Monstro - Rolagem;
-									Acao1 = "Voce acerta um soco no cachorro!	--	Dano:"+Rolagem;
+								if (roll > 7){
+									roll =  generator.nextInt(5);
+									roll = roll + Vantagem;
+									Vida_Monstro = Vida_Monstro - roll;
+									action1 = "Voce acerta um soco no cachorro!	--	Dano:"+roll;
 								} else{
-									Acao1 = "Voce erra!";
+									action1 = "Voce erra!";
 								}
 							}
 						}
 					}
-					if (Direcao.equals("escapar")){
-						Rolagem =  gerador.nextInt(10);
-						if (Rolagem > 7){
+					if (direcao.equals("escapar")){
+						roll =  generator.nextInt(10);
+						if (roll > 7){
 							C++;
 							ERRO = "Voce escapa do combate!";
 						} else{
-							Acao1 = "Voce nao consegue escapar!";
+							action1 = "Voce nao consegue escapar!";
 						}
 					}
-					if (Direcao.equals("fugir")){
-						Rolagem =  gerador.nextInt(10);
-						if (Rolagem > 7){
+					if (direcao.equals("fugir")){
+						roll =  generator.nextInt(10);
+						if (roll > 7){
 							C++;
 							ERRO = "Voce foge do combate!";
 						} else{
-							Acao1 = "Voce nao consegue fugir!";
+							action1 = "Voce nao consegue fugir!";
 						}
 					}
 				} else{
-					Cont = 1;
+					int Cont = 1;
 					C++;
 				}
 				Vantagem = 0;
 				if (Vida > 0 ){
-					Rolagem =  gerador.nextInt(20);
-					if (Rolagem == 0){
+					roll =  generator.nextInt(20);
+					if (roll == 0){
 						Vantagem = Vantagem + 4;
-						Acao2 = "O cachorro escorrega nas folhas e cai!";
+						action2 = "O cachorro escorrega nas folhas e cai!";
 					} else{
-						Rolagem = Rolagem + Vantagem_MONS;
-						if (Rolagem > 15){
-							Rolagem =  gerador.nextInt(7);
-							Rolagem = Rolagem + Vantagem_MONS;
-							Vida = Vida - Rolagem;
-							Acao2 = "O cachorro acerta uma mordida certeira!	--	Dano:"+Rolagem;
+						roll = roll + Vantagem_MONS;
+						if (roll > 15){
+							roll =  generator.nextInt(7);
+							roll = roll + Vantagem_MONS;
+							Vida = Vida - roll;
+							action2 = "O cachorro acerta uma mordida certeira!	--	Dano:"+roll;
 						} else{
-							if (Rolagem > 7){
-								Rolagem =  gerador.nextInt(5);
-								Rolagem = Rolagem + Vantagem_MONS;
-								Vida = Vida - Rolagem;
-								Acao2 = "O cachorro te acerta um patada!	--	Dano:"+Rolagem;
+							if (roll > 7){
+								roll =  generator.nextInt(5);
+								roll = roll + Vantagem_MONS;
+								Vida = Vida - roll;
+								action2 = "O cachorro te acerta um patada!	--	Dano:"+roll;
 							} else{
-								Acao2 = "O cachorro tenta te morder, porem voce se esquiva!";
+								action2 = "O cachorro tenta te morder, porem voce se esquiva!";
 							}
 						}
 					}
