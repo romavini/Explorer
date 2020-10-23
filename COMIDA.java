@@ -1,12 +1,12 @@
 import java.io.*;
 import java.util.Random;
 public class COMIDA{
-	public static void main (String args[]){
+	public static void main (String[] args){
 	Random gerador = new Random();
 	BufferedReader entrada;
 	entrada = new BufferedReader(new InputStreamReader(System.in));
-	String MAPA[][] = new String [17][17];
-	int G[][] = new int [17][17];
+	String[][] MAPA = new String [17][17];
+	int[][] G = new int [17][17];
 	int i = 0;
 	int j = 0;
 	int t = 0;
@@ -65,10 +65,10 @@ public class COMIDA{
 	w=0;
 	
 	tamanho = 29;
-	String GC [][] = new String [16][16];
-	int GCA [][] = new int [16][16];
-	int GC1[] = new int [tamanho];
-	int GC2[] = new int [tamanho];
+	String[][] GC = new String [16][16];
+	int[][] GCA = new int [16][16];
+	int[] GC1 = new int [tamanho];
+	int[] GC2 = new int [tamanho];
 	int cont =0;
 
 	

@@ -1,12 +1,12 @@
 import java.io.*;
 import java.util.Random;
 public class MONSTRO{
-	public static void main (String args[]){
+	public static void main (String[] args){
 	Random gerador = new Random();
 	BufferedReader entrada;
 	entrada = new BufferedReader(new InputStreamReader(System.in));
-	String MAPA[][] = new String [17][17];
-	String MONSTRO[][] = new String [17][17];
+	String[][] MAPA = new String [17][17];
+	String[][] MONSTRO = new String [17][17];
 	int i = 0;
 	int j = 0;
 	int t = 0;
@@ -60,22 +60,12 @@ public class MONSTRO{
 	int tamanho;
 	tamanho = 5;
 	
-	int GMA [][] = new int [16][16];
+	int[][] GMA = new int [16][16];
 	int cont =0;
-	
-	while (infinity < tamanho){
-		u = gerador.nextInt(15);
-		v = gerador.nextInt(15);
-		if (GMA[u][v]==1){
-			
-		} else {
-			GMA[u][v] = 1;
-			infinity++;
-			System.out.println("ADD CACHORRO ; "+u+" ; "+v);
-		}
-	}
-	
-	String MonstroCachorroDormindo = "ha um cachorro grande dormindo ao pe de uma arvore";
+
+		MAP.infinityLessThanSize(gerador, infinity, tamanho, GMA);
+
+		String MonstroCachorroDormindo = "ha um cachorro grande dormindo ao pe de uma arvore";
 	
 	for(i = 0 ;i < 17 ;i++){
 		for(j = 0 ;j < 17 ;j++){
