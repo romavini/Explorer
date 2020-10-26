@@ -14,13 +14,13 @@
 
 Download the project from Github, compile using
 ``` java 
->>> javac MAPA.java MONSTRO.java EXPLORER.java COMIDA.java
+>>> javac MAP.java MONSTRO.java EXPLORER.java COMIDA.java GameScreenCli.java
 ```
 -------
 #### Running the game
 
 To run the game just use the java command
 ``` java
->>> java MAPA
+>>> java MAP
 ```
 -------
