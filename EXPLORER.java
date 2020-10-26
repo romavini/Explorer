@@ -1,9 +1,9 @@
 import java.io.*;
 public class EXPLORER{
-	public static void main (String args[]){
+	public static void main (String[] args){
 	BufferedReader entrada;
 	entrada = new BufferedReader(new InputStreamReader(System.in));
-	String MAPA[][] = new String [17][17];
+	String[][] MAPA = new String [17][17];
 	int u = 3;
 	int v = 3;
 	int T = 0;
