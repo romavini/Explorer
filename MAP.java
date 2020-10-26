@@ -66,7 +66,8 @@ public class MAP {
 					"		<--	Aqui aparecem os mostros. Cuidado...");
 
 			GameScreenCli.printRules();
-
+			
+			input.readLine();
 
 			String direction;
 			int infinity = 0; 								//Gerador de comida
