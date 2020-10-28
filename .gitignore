@@ -1,0 +1,23 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+**/.idea/
+**/.gradle
+**/node_modules/
+.DS_Store
+target/
+.classpath
+.project
+.settings
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+.vscode-test
+.vscode/
+.code-workspace
