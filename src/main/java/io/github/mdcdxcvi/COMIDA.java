@@ -1,14 +1,14 @@
-package com.mdcdxcvi;
+package io.github.mdcdxcvi;
 
 import java.io.*;
 import java.util.Random;
-public class MONSTRO{
+public class COMIDA{
 	public static void main (String[] args){
 	Random gerador = new Random();
 	BufferedReader entrada;
 	entrada = new BufferedReader(new InputStreamReader(System.in));
 	String[][] MAPA = new String [17][17];
-	String[][] MONSTRO = new String [17][17];
+	int[][] G = new int [17][17];
 	int i = 0;
 	int j = 0;
 	int t = 0;
@@ -28,6 +28,7 @@ public class MONSTRO{
 	
 	int Random =  gerador.nextInt(10);
 	
+	String Monstro_Cachorro_Dormindo = "há um cachorro grande dormindo ao pe de uma arvore"; //=======Monstro_Cachorro_Dormindo=======//
 	
 	for(i = 0 ;i < 17 ;i++){ //											//=======MURALHA=======//
 		MAPA[i][0] = "Muralha lisa, extremamente alta";
@@ -49,38 +50,51 @@ public class MONSTRO{
 		}
 	}
 	
-	
+	u=3;
+	v=1;
+	MAPA[u][v] = MAPA[u][v]+", "+Monstro_Cachorro_Dormindo; //=======MONSTRO=======//
+	u++;
+	MAPA[u][v] = "Gramado, porem bem iluminado";
 	
 	
 	String Direcao = entrada.readLine();
 	
 	
-	int infinity = 0; 								//Gerador de monstros
-	int Vida_Monstro= 37;
+	int infinity = 0; 								//Gerador de comida
+	int y, w, f, g, tamanho;
 	int dupli = 0;
+	y=0;
+	w=0;
 	
-	int tamanho;
-	tamanho = 5;
-	
-	int[][] GMA = new int [16][16];
+	tamanho = 29;
+	String[][] GC = new String [16][16];
+	int[][] GCA = new int [16][16];
+	int[] GC1 = new int [tamanho];
+	int[] GC2 = new int [tamanho];
 	int cont =0;
 
-		MAP.infinityLessThanSize(gerador, infinity, tamanho, GMA);
-
-		String MonstroCachorroDormindo = "ha um cachorro grande dormindo ao pe de uma arvore";
 	
-	for(i = 0 ;i < 17 ;i++){
-		for(j = 0 ;j < 17 ;j++){
-			MONSTRO[i][j]=" ";
+	while (infinity < tamanho){
+		u = gerador.nextInt(15);
+		v = gerador.nextInt(15);
+		System.out.println(u+" ; "+y+" ; "+v+" ; "+w+" ; "+tamanho+" ; "+infinity+"-----------------");
+		if (GCA[u][v]==1){
+			
+		} else {
+			GCA[u][v] = 1;
+			infinity++;
+			System.out.println("---------------------------teste 1 : "+infinity);
 		}
 	}
 	
+	Direcao = entrada.readLine();
+	
 	for(i = 0 ;i < 15 ;i++){
 		for(j = 0 ;j < 15 ;j++){
-			if (GMA[i][j]==1){
-			MONSTRO[i+1][j+1] = MonstroCachorroDormindo;
+			if (GCA[i][j]==1){
+			MAPA[i+1][j+1] = MAPA[i+1][j+1]+", maca no chao";
+			System.out.println(i+" ; "+y+" ; "+j+" ; "+w+" ; "+GCA[i][j]+" ; "+cont+"-----------------");
 			cont++;
-			System.out.println("-----------------ADD CACHORRO ; "+i+" ; "+j);
 			}
 			
 		}
@@ -89,37 +103,11 @@ public class MONSTRO{
 	while(t==0){
 	u = Integer.parseInt(entrada.readLine());
 	v = Integer.parseInt(entrada.readLine());
-	System.out.println(MONSTRO[u][v]);
-	Combate();
+	System.out.println(MAPA[u][v]);
 	}
 	
 	} catch (Exception e){
 	System.out.println("Erro");
-	}
-}
-public static void Combate (){
-	Random gerador = new Random();
-	int Random =  gerador.nextInt(2);
-	int C = 0;
-	if (Random == 0){
-	System.out.println("O cachorro acorda!");
-	
-	while(C == 0){
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
-	} else{
-	System.out.println("Nada acontece");
 	}
 }
 }

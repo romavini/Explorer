@@ -1,4 +1,4 @@
-package com.mdcdxcvi;
+package io.github.mdcdxcvi;
 
 import java.io.*;
 import java.util.Random;
