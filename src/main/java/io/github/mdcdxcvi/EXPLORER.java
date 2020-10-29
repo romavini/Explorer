@@ -1,3 +1,5 @@
+package io.github.mdcdxcvi;
+
 import java.io.*;
 public class EXPLORER{
 	public static void main (String[] args){
