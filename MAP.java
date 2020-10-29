@@ -6,8 +6,30 @@ public class MAP {
 	private static String ERRO;
 	private static int food1 = 0;
 	private static int hunger = 10, hungerF = 0;
+	private static Language langObj;
 	public static void main (String[] args){
 		Random generator = new Random();
+
+		// user input
+		try{	
+			String language = new String(args[0]);
+			String country = new String(args[1]);
+			langObj = new Language(language,country);
+		}
+		catch(Exception e){
+			langObj = new Language();
+		}
+
+		// // use specified message bundle
+		// if (language != null && country != null){
+		// 	langObj = new Language(language,country);
+		// }
+		// else{
+		// //System.out.println(e);
+		// // use default message bundle
+		// langObj = new Language();
+		// }
+
 
 		BufferedReader input;
 		input = new BufferedReader(new InputStreamReader(System.in));
@@ -32,38 +54,55 @@ public class MAP {
 
 			//=======Monstro_Cachorro_Dormindo=======//
 
-			highWallWalk(map, 0, 17, "Muralha lisa, extremamente alta", 16);
+			// highWallWalk(map, 0, 17, "Muralha lisa, extremamente alta", 16);
+			highWallWalk(map, 0, 17, langObj.getMessage("Extremamente_Alta"), 16);
 
 
-			highWallWalk(map, 1, 16, "Gramado, pouca iluminacao", 15);
+			// highWallWalk(map, 1, 16, "Gramado, pouca iluminacao", 15);
+			highWallWalk(map, 1, 16, langObj.getMessage("Gramado_Pouca_Iluminacao"), 15);
 
 			for(i = 2 ;i < 15 ;i++){
 				for(j = 2 ;j < 15 ;j++){
-					map[i][j] = "Gramado, floresta escura";
+					// map[i][j] = "Gramado, floresta escura";
+					map[i][j] = langObj.getMessage("Gramado_Floresta_Escura");
 				}
 			}
 			int u = 3;
 			int v = 1;
-			map[u][v] = "Gramado, porem bem iluminado";
+			// map[u][v] = "Gramado, porem bem iluminado";
+			map[u][v] = langObj.getMessage("Gramado_Bem_Iluminado");
 
 			u = 4;
 			v = 4;
 
 			GameScreenCli.printExplorerString("				EXPLORER v.0");
 			System.out.println();
-			System.out.println("		Bem vindo ao EXPLORER v.0, ");
-			String L_MAPA = ("Seu local e: "+ v +" ; "+ u +" .");
-			String leftHand = ("Mao esquerda vazia.");
-			String rightHand = ("Mao direita vazia.");
+			// System.out.println("		Bem vindo ao EXPLORER v.0, ");
+			System.out.println("		"+langObj.getMessage("Bem_Vindo")+" ");
+			// String L_MAPA = ("Seu local e: "+ v +" ; "+ u +" .");
+			String L_MAPA = (langObj.getMessage("Seu_Local")+" "+ v +" ; "+ u +" .");
+			// String leftHand = ("Mao esquerda vazia.");
+			String leftHand = langObj.getMessage("Mao_Esquerda_Vazia");
+			// String rightHand = ("Mao direita vazia.");
+			String rightHand = langObj.getMessage("Mao_Direita_Vazia");
 
-			gameStatusNow(life, hunger, food1, L_MAPA, leftHand, rightHand,
-					" 	Para te manter vivo      -->		Vida: ",
-					" 	Para te manter atento    -->		Fome: ",
-					"	Para nao ficar com fome  -->	 	  ", "" +
-							" 	Para te localizar     --> 			",
-					"		<--	Quando houver comida, aparecera aqui",
-					"	Para controlar o que carrega-->			",
-					"		<--	Aqui aparecem os mostros. Cuidado...");
+			// gameStatusNow(life, hunger, food1, L_MAPA, leftHand, rightHand,
+			// 		" 	Para te manter vivo      -->		Vida: ",
+			// 		" 	Para te manter atento    -->		Fome: ",
+			// 		"	Para nao ficar com fome  -->	 	  ", "" +
+			// 				" 	Para te localizar     --> 			",
+			// 		"		<--	Quando houver comida, aparecera aqui",
+			// 		"	Para controlar o que carrega-->			",
+			// 		"		<--	Aqui aparecem os mostros. Cuidado...");
+
+					gameStatusNow(life, hunger, food1, L_MAPA, leftHand, rightHand,
+					" 	"+langObj.getMessage("Para_Manter_Vivo")+" ",
+					" 	"+langObj.getMessage("Para_Manter_Atento")+" ",
+					"	"+langObj.getMessage("Para_Nao_Fome")+"	 	  ", "" +
+							" 	"+langObj.getMessage("Para_Te_Localizar")+" 			",
+					"		"+langObj.getMessage("Comida_Aparecera_Aqui"),
+					"	"+langObj.getMessage("Para_Controlar_Carrega")+"			",
+					"		"+langObj.getMessage("Aqui_Aparecem_Mostros"));
 
 			GameScreenCli.printRules();
 			
@@ -90,7 +129,8 @@ public class MAP {
 			}
 
 
-			String Maca = "	maca no chao!";
+			// String Maca = "	maca no chao!";
+			String Maca = "	"+langObj.getMessage("Maca_No_Chao");
 
 			foodGenerator(GCA, food, Maca);
 
@@ -106,7 +146,8 @@ public class MAP {
 			while (T==0){ 																			//INICIO~~~~~~
 				monsterHealth = 37f;
 
-				L_MAPA = ("Seu local e: "+ v +" ; "+ u +" .");
+				// L_MAPA = ("Seu local e: "+ v +" ; "+ u +" .");
+				L_MAPA = (langObj.getMessage("Seu_Local")+" "+ v +" ; "+ u +" .");
 
 				if (hungerF == 4){
 					hunger--;
@@ -137,17 +178,20 @@ public class MAP {
 
 					if (u ==0){
 
-						error = "Voce nao pode avancar nesse sentido.";
+						// error = "Voce nao pode avancar nesse sentido.";
+						error = langObj.getMessage("Direcao_Errada");
 						u = u +1;
 					} else{
 						if (v ==0){
 
-							error = "Voce nao pode avancar nesse sentido.";
+							// error = "Voce nao pode avancar nesse sentido.";
+							error = langObj.getMessage("Direcao_Errada");
 							v = v +1;
 						}else{
 							if (v ==16){
 
-								error = "Voce nao pode avancar nesse sentido.";
+								// error = "Voce nao pode avancar nesse sentido.";
+								error = langObj.getMessage("Direcao_Errada");
 								v = v -1;
 							}
 						}
@@ -155,73 +199,76 @@ public class MAP {
 
 					System.out.println(error);
 					error = " ";
-					L_MAPA = ("Seu local e: "+ u +" ; "+ v +" .");
+					L_MAPA = (langObj.getMessage("Seu_Local")+" "+ u +" ; "+ v +" .");
 
-					gameStatusNow(life, hunger, food1, L_MAPA, leftHand, rightHand, "								Vida: ", "								Fome: ", "								   ", "							", food[u][v], "							", monster[u][v]);
+					// gameStatusNow(life, hunger, food1, L_MAPA, leftHand, rightHand, "								Vida: ", "								Fome: ", "								   ", "							", food[u][v], "							", monster[u][v]);
+					gameStatusNow(life, hunger, food1, L_MAPA, leftHand, rightHand, "								"+langObj.getMessage("Vida")+" ", "								"+langObj.getMessage("Fome")+" ", "								   ", "							", food[u][v], "							", monster[u][v]);
 
 
 					if (!begin){
 						System.out.println();
-						System.out.println(map[u][v]+", voce acaba de acorda... ");
+						// System.out.println(map[u][v]+", voce acaba de acorda... ");
+						System.out.println(map[u][v]+", "+langObj.getMessage("Voce_De_Acorda")+" ");
 						System.out.println();
 						System.out.println();
 						System.out.println();
-						System.out.println("sul: "+map[u +1][v]);
-						System.out.println("leste: "+map[u][v +1]);
-						System.out.println("norte: "+map[u -1][v]);
-						System.out.println("oeste: "+map[u][v -1]);
+						System.out.println(langObj.getMessage("Sul")+": "+map[u +1][v]);
+						System.out.println(langObj.getMessage("Leste")+": "+map[u][v +1]);
+						System.out.println(langObj.getMessage("Norte")+": "+map[u -1][v]);
+						System.out.println(langObj.getMessage("Oeste")+": "+map[u][v -1]);
 						System.out.println();
 					} else{
 						System.out.println();
-						System.out.println("Seu local e: "+map[u][v]);
+						System.out.println(langObj.getMessage("Seu_Local")+" "+map[u][v]);
 						System.out.println();
 						System.out.println();
 						System.out.println();
-						System.out.println("sul: "+map[u +1][v]);
-						System.out.println("leste: "+map[u][v +1]);
-						System.out.println("norte: "+map[u -1][v]);
-						System.out.println("oeste: "+map[u][v -1]);
+						System.out.println(langObj.getMessage("Sul")+": "+map[u +1][v]);
+						System.out.println(langObj.getMessage("Leste")+": "+map[u][v +1]);
+						System.out.println(langObj.getMessage("Norte")+": "+map[u -1][v]);
+						System.out.println(langObj.getMessage("Oeste")+": "+map[u][v -1]);
 						System.out.println();
 					}
 
 
 
 
-					System.out.println("Escolha uma direcao");
+					System.out.println(langObj.getMessage("Escolha_Direcao"));
 
 					direction = input.readLine();
 
-					if (direction.equals("sul")){
+					if (direction.equals(langObj.getMessage("Sul"))){
 						u = u + 1;
 						hungerF++;
 					} else {
-						if (direction.equals("leste")){
+						if (direction.equals(langObj.getMessage("Leste"))){
 							v = v + 1;
 							hungerF++;
 						} else{
-							if (direction.equals("norte")){
+							if (direction.equals(langObj.getMessage("Norte"))){
 
 								u = u - 1;
 
 								hungerF++;
 								System.out.println(u);
 							} else{
-								if (direction.equals("oeste")){
+								if (direction.equals(langObj.getMessage("Oeste"))){
 									v = v - 1;
 									hungerF++;
 								}
 							}
 						}
 					}
-					if (direction.equals("pegar maca")){
-						error = getMaca(u, v, GCA, food, error);
+					if (direction.equals(langObj.getMessage("Pegar_Maca"))){
+						// error = getMaca(u, v, GCA, food, error);
+						error = getMaca(u, v, GCA, food, error, langObj.getMessage("Nao_Macas_Chao"));
 					}
-					if (direction.equals("comer")){
+					if (direction.equals(langObj.getMessage("Comer"))){
 						eat();
 					}
 
 
-					if (direction.equals("atacar")){
+					if (direction.equals(langObj.getMessage("Atacar"))){
 						if(GMA[u -1][v -1]==1){
 							random =  generator.nextInt(10);
 							monsterHealth = monsterHealth - random;
@@ -232,7 +279,7 @@ public class MAP {
 							}
 							System.out.println(monsterHealth);
 						} else{
-							error = "Nao ha nada a ser atacado!";
+							error = langObj.getMessage("Nada_Atacado");
 						}
 					}
 
@@ -254,17 +301,18 @@ public class MAP {
 			}
 
 		}catch(Exception e){
-			System.out.println("erro");
+			System.out.println(langObj.getMessage("Erro"));
 		}
 	}
 
-	private static String getMaca(int u, int v, int[][] GCA, String[][] food, String error) {
+	private static String getMaca(int u, int v, int[][] GCA, String[][] food, String error, String strDisplay) {
 		if(GCA[u -1][v -1]==1){
 			food1++;
 			GCA[u -1][v -1]= 0;
 			food[u][v]=" ";
 		} else{
-			error = "Nao ha macas no chao!";
+			// error = "Nao ha macas no chao!";
+			error = strDisplay;
 		}
 		return error;
 	}
@@ -312,7 +360,8 @@ public class MAP {
 
 		infinityLessThanSize(generator, infinity, size, GMA);
 
-		String SleepingMonsterDog = "	cachorro grande dormindo ao pe de uma arvore";
+		// String SleepingMonsterDog = "	cachorro grande dormindo ao pe de uma arvore";
+		String SleepingMonsterDog = "	"+langObj.getMessage("Cachorro_Grande_Dormindo");
 
 		foodGenerator(GMA, monster, SleepingMonsterDog);
 		return GMA;
@@ -321,7 +370,7 @@ public class MAP {
 	private static void gameStatusNow(float life, int hunger, int food1, String l_MAPA, String leftHand, String rightHand, String s, String s2, String s3, String s4, String s5, String s6, String s7) {
 		System.out.println(s + life);
 		System.out.println(s2 + hunger);
-		System.out.println(s3 + food1 + " x macas");
+		System.out.println(s3 + food1 + " "+langObj.getMessage("X_Macas"));
 		System.out.println();
 		System.out.println(s4 + l_MAPA);
 		System.out.println(s5);
@@ -371,7 +420,7 @@ public class MAP {
 			System.out.println();
 			System.out.println();
 			System.out.println();
-			System.out.println("				COMBATE COM CACHORRO!!");
+			System.out.println("				"+langObj.getMessage("Combate_Com_Cachorro")+"!!");
 
 			while(C == 0){
 				Vantagem_MONS = 0;
@@ -380,7 +429,7 @@ public class MAP {
 					System.out.println();
 					System.out.println();
 					System.out.println();
-					System.out.println("				COMBATE COM CACHORRO!!");
+					System.out.println("				"+langObj.getMessage("Combate_Com_Cachorro")+"!!");
 					System.out.println();
 					System.out.println(action1);
 					System.out.println();
@@ -388,63 +437,64 @@ public class MAP {
 					action1 = " ";
 					action2 = " ";
 					System.out.println();
-					System.out.println("Cachorro: "+Vida_Monstro+"							Sua Vida: "+Vida);
-					System.out.println("								Fome: "+Fome);
-					System.out.println("								   "+Comida+" x macas");
+					System.out.println(langObj.getMessage("Cachorro")+" "+Vida_Monstro+"							"+langObj.getMessage("Sua_Vida")+" "+Vida);
+					System.out.println("								"+langObj.getMessage("Fome")+" "+Fome);
+					System.out.println("								   "+Comida+" "+langObj.getMessage("X_Macas"));
 					System.out.println();
 					System.out.println("							"+L_MAPA);
 					System.out.println();
 					System.out.println("							"+MAO_E);
 					System.out.println();
 					System.out.println("							"+MAO_D);
-					GameScreenCli.printExplorerString("O que vai fazer?");
+					GameScreenCli.printExplorerString(langObj.getMessage("Que_Vai_Fazer"));
 					System.out.println();
 					System.out.println();
 
 					String direcao = input.readLine();
-					if (direcao.equals("atacar")){
+					if (direcao.equals(langObj.getMessage("Atacar"))){
 						roll =  generator.nextInt(20);
 						if (roll == 0){
 							Vantagem_MONS = Vantagem_MONS + 4;
-							action1 = "Voce escorrega e cai no chao!";
+							action1 = langObj.getMessage("Escorrega_E_Cai");
 						} else {
 							roll = roll + Vantagem;
 							if (roll > 15){
 								roll =  generator.nextInt(7);
 								roll = roll + Vantagem;
 								Vida_Monstro = Vida_Monstro - roll;
-								action1 = "Voce acerta um chute no cachorro!	--	Dano:"+roll;
+								action1 = langObj.getMessage("Chute_No_Cachorro")+roll;
 							} else{
 								if (roll > 7){
 									roll =  generator.nextInt(5);
 									roll = roll + Vantagem;
 									Vida_Monstro = Vida_Monstro - roll;
-									action1 = "Voce acerta um soco no cachorro!	--	Dano:"+roll;
+									action1 = langObj.getMessage("Soco_No_Cachorro")+roll;
 								} else{
-									action1 = "Voce erra!";
+									action1 = langObj.getMessage("Voce_Erra");
 								}
 							}
 						}
 					}
-					if (direcao.equals("escapar")){
+					if (direcao.equals(langObj.getMessage("Escapar"))){
 						roll =  generator.nextInt(10);
 						if (roll > 7){
 							C++;
-							ERRO = "Voce escapa do combate!";
+							ERRO = langObj.getMessage("Escapa_Do_Combate");
 						} else{
-							action1 = "Voce nao consegue escapar!";
+							action1 = langObj.getMessage("Nao_Consegue_Escapar");
 						}
 					}
-					if (direcao.equals("fugir")){
+					if (direcao.equals(langObj.getMessage("Fugir"))){
 						roll =  generator.nextInt(10);
 						if (roll > 7){
 							C++;
-							ERRO = "Voce foge do combate!";
+							ERRO = langObj.getMessage("Foge_Do_Combate");
 						} else{
-							action1 = "Voce nao consegue fugir!";
+							action1 = langObj.getMessage("Nao_Consegue_Fugir");
 						}
 					}
 				} else{
+					// Cont defined but never used ?
 					int Cont = 1;
 					C++;
 				}
@@ -453,22 +503,22 @@ public class MAP {
 					roll =  generator.nextInt(20);
 					if (roll == 0){
 						Vantagem = Vantagem + 4;
-						action2 = "O cachorro escorrega nas folhas e cai!";
+						action2 = langObj.getMessage("Cachorro_Escorrega_E_Cai");
 					} else{
 						roll = roll + Vantagem_MONS;
 						if (roll > 15){
 							roll =  generator.nextInt(7);
 							roll = roll + Vantagem_MONS;
 							Vida = Vida - roll;
-							action2 = "O cachorro acerta uma mordida certeira!	--	Dano:"+roll;
+							action2 = langObj.getMessage("Cachorro_Mordida")+roll;
 						} else{
 							if (roll > 7){
 								roll =  generator.nextInt(5);
 								roll = roll + Vantagem_MONS;
 								Vida = Vida - roll;
-								action2 = "O cachorro te acerta um patada!	--	Dano:"+roll;
+								action2 = langObj.getMessage("Cachorro_Acerta_Patada")+roll;
 							} else{
-								action2 = "O cachorro tenta te morder, porem voce se esquiva!";
+								action2 = langObj.getMessage("Cachorro_Morder_Voce_Esquiva");
 							}
 						}
 					}
@@ -480,7 +530,7 @@ public class MAP {
 			}
 			//return Cont;
 		} catch (Exception e){
-			System.out.println("Erro!");
+			System.out.println(langObj.getMessage("Erro"));
 		}
 	}
 }
