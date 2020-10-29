@@ -1,3 +1,5 @@
+package io.github.mdcdxcvi;
+
 public class GameScreenCli {
 
     protected static void printThanksForPlayingScreen() {

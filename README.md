@@ -16,11 +16,26 @@ Download the project from Github, compile using
 ``` java 
 >>> javac MAP.java MONSTRO.java EXPLORER.java COMIDA.java GameScreenCli.java
 ```
+
+To install dependencies, maven and java 1.8 are needed, then you can run: 
+
+```sh
+mvn clean install
+```
+
 -------
 #### Running the game
 
 To run the game just use the java command
-``` java
->>> java MAP
+
+``` java 
+>>> javac MAP.java MONSTRO.java EXPLORER.java COMIDA.java GameScreenCli.java
+```
+
+or 
+
+```sh
+mvn clean compile package
+java -jar target/explorer-1.0.jar
 ```
 -------
