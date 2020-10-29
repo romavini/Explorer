@@ -1,3 +1,5 @@
+package io.github.mdcdxcvi;
+
 import java.util.ResourceBundle;
 import java.util.Locale;
 

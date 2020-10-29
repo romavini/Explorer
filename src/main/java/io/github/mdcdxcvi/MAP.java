@@ -22,17 +22,6 @@ public class MAP {
 			langObj = new Language();
 		}
 
-		// // use specified message bundle
-		// if (language != null && country != null){
-		// 	langObj = new Language(language,country);
-		// }
-		// else{
-		// //System.out.println(e);
-		// // use default message bundle
-		// langObj = new Language();
-		// }
-
-
 		BufferedReader input;
 		input = new BufferedReader(new InputStreamReader(System.in));
 		String[][] map = new String [17][17];
