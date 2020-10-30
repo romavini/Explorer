@@ -76,5 +76,11 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <!-- Adding resources directory reference for accessing properties files-->
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
   </build>
 </project>
