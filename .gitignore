@@ -14,6 +14,7 @@
 # Package Files #
 *.jar
 *.war
+
 *.nar
 *.ear
 *.zip
@@ -71,6 +72,8 @@ buildNumber.properties
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+.vscode-test
+
 
 .classpath
 .project

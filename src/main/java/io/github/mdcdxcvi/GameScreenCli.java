@@ -1,9 +1,11 @@
 package io.github.mdcdxcvi;
 
 public class GameScreenCli {
+
     protected static void printThanksForPlayingScreen() {
 
-        printExplorerString("			Obrigado por ter jogado.");
+        // printExplorerString("			Obrigado por ter jogado.");
+        printExplorerString("			"+Language.messages.getString("Obrigado_Ter_Jogado"));
         System.out.println();
         System.out.println();
         System.out.println();
@@ -26,12 +28,13 @@ public class GameScreenCli {
     }
 
     static void printRules() {
-        System.out.println("E simple, para ir ao sul, escreva: sul ; ");
-        System.out.println("Para pegar macas, escreva: pegar maca ; ");
-        System.out.println("Para atacar com o que estiver em sua mao direita, escreva: atacar direita ; ");
-        System.out.println("Para comer (caso voce tenha comida), escreva: comer ; ");
-        System.out.println("Para se livrar de algo (balde, por exemplo) , escreva: jogar balde;");
+        // System.out.println("E simple, para ir ao sul, escreva: sul ; ");
+        System.out.println(Language.messages.getString("Para_Sul")+" ");
+        System.out.println(Language.messages.getString("Para_Pegar_Maca")+" ");
+        System.out.println(Language.messages.getString("Para_Atacar_Mao_Direita")+" ");
+        System.out.println(Language.messages.getString("Para_Comer")+" ");
+        System.out.println(Language.messages.getString("Para_Livrar_De_Algo"));
         System.out.println();
-        System.out.println("Esta pronto? Precione enter!");
+        System.out.println(Language.messages.getString("Esta_Pronto"));
     }
 }
