@@ -10,7 +10,7 @@
 
 -------
 #### Setup
-[![Java-15](https://img.shields.io/badge/Java-15-1f425f.svg)](https://www.java.com/pt-BR/) [![Javac-15](https://img.shields.io/badge/Javac-15-1f425f.svg)](https://www.java.com/pt-BR/)
+[![Java-1.8](https://img.shields.io/badge/Java-1.8-1f425f.svg)](https://www.java.com/pt-BR/) [![Maven-1.8](https://img.shields.io/badge/Maven-1.8-963a81.svg)](https://maven.apache.org/)
 
 Download the project from Github, compile using
 ``` java 
@@ -29,10 +29,10 @@ mvn clean install
 To run the game just use the java command
 
 ``` java 
->>> javac MAP.java MONSTRO.java EXPLORER.java COMIDA.java GameScreenCli.java
+>>> java MAP
 ```
 
-or 
+or, using Maven:
 
 ```sh
 mvn clean compile package
