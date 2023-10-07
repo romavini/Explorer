@@ -68,7 +68,7 @@ public class MAP {
 					"		<--	Aqui aparecem os mostros. Cuidado...");
 
 			GameScreenCli.printRules();
-			
+
 			input.readLine();
 
 			String direction;
@@ -306,7 +306,7 @@ public class MAP {
 		int size;
 		int infinity;
 		infinity = 0; 							//Gerador de monstros
-		
+
 		size = 23;
 
 		int[][] GMA = new int [16][16];
@@ -366,7 +366,7 @@ public class MAP {
 		int Vantagem_MONS;
 		int Vantagem= 0 ;
 		int C = 0;
-		int roll;		
+		int roll;
 		String action1 = " ";
 		String action2 = " ";
 		try{
